@@ -1,0 +1,23 @@
+(defun binary-search (input-list value)
+    (when (zerop (length input-list)) input-list)
+    (let ((found nil)
+            (begin 0)
+            (end (length input-list)))
+        (let ((mid (floor (/ end 2))))
+            (do ()
+                ((or (eq begin end) found))
+                (when (> value (nth mid input-list))
+                    (setq begin (+ 1 mid)))
+                (when (< value (nth mid input-list))
+                    (setq end mid))
+                (when (eq value (nth mid input-list))
+                    (format t "Founded at ~d° position~%" mid)
+                    (setq found t))
+                (setq mid (floor (/ (+ begin end) 2))))
+            (if (eq found t) 
+                (nth mid input-list)
+                nil))))
+
+(print (binary-search '(1 2 3 4 5 6 7 8 9) 5))
+
+; sbcl --script binary-search.lisp
